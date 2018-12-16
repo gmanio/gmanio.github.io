@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  text-align: justify;
+  background: rgba(0, 0, 0, 0.4);
+}
+h3 { padding: 16px;}
+.background {
+  position: relative;
+  padding: 40px 0 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(70deg, blue, red);
+}
+.background p {
+  padding: 16px;
+}
+.bg_opacity {position: absolute;top: 0;width: 100%;height: 100%;background: #000; opacity: 0.3;z-index: 1}
