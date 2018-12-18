@@ -1,5 +1,5 @@
 app-root {position: relative;display: block;height: 100%;}
-.wrap {position: relative;height: 100%; /*background:linear-gradient(0deg, #86aaff, #70bc4c, #ffbe00, #f46e85)*/ }
+.wrap {position: relative;height: auto; /*background:linear-gradient(0deg, #86aaff, #70bc4c, #ffbe00, #f46e85)*/ }
 .container {position: fixed;top: 0;width: 100%;height: 100%;color: #fff}
 .content {padding: 16px;}
 .ref_link {color: #fff}
