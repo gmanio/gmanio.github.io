@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reactive.component.css']
 })
 export class ReactiveComponent implements OnInit {
-
-  constructor() {
+  constructor () {
   }
 
-  ngOnInit() {
+  ngOnInit () {
   }
-
 }
