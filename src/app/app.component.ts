@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import screenfull from 'screenfull';
+import * as fullscreen from 'screenfull';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,9 +10,9 @@ export class AppComponent {
   title = 'gman.io';
 
   @HostListener('window:click')
-  activateFullscreen() {
-    if ( screenfull.enabled ) {
-      screenfull.request();
+  activateFullscreen () {
+    if (fullscreen && fullscreen.enabled) {
+      fullscreen.request();
     }
   }
 }
