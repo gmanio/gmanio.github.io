@@ -1,0 +1,1 @@
+(self.webpackChunkmy_webpack_project=self.webpackChunkmy_webpack_project||[]).push([[632],{632:(e,t,c)=>{"use strict";c.r(t),c.d(t,{default:()=>a});var n=c(294);const a=function(){return n.createElement(n.Fragment,null,"gman.io")}}}]);
