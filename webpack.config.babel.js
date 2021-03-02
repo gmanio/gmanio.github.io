@@ -2,8 +2,8 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import fs from 'fs';
-import webpack from 'webpack';
-
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import webpack from 'webpack';
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
@@ -64,15 +64,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './index.html',
       favicon: './public/favicon/favicon.ico',
+      baseUrl: isProduction ? './' : './',
     }),
+    new ForkTsCheckerWebpackPlugin()
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    historyApiFallback: true,
     hot: true,
-    // writeToDisk: true,
+    contentBase: [path.join(__dirname, 'dist'), path.join(__dirname), path.join(__dirname, 'src')],
+    compress: true,
+    host: '0.0.0.0',
+    port: 8000,
+    historyApiFallback: true,
     https: true,
     key: fs.readFileSync('./config/key.pem'),
     cert: fs.readFileSync('./config/cert.pem'),

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import withFirebase from './hocs/withFirebase';
 
 import MainPage from './pages/MainPage';
 
-export const Routes: React.FC = () => {
+const Routes: React.FC = () => {
   return (
     <Router>
       <Switch>
@@ -13,3 +14,5 @@ export const Routes: React.FC = () => {
     </Router>
   );
 };
+
+export default withFirebase(Routes);

@@ -7,6 +7,7 @@ const Loader: React.FC = () => {
       <Styled.HexagonWrapper>
         <Styled.Hexagon />
       </Styled.HexagonWrapper>
+      <Styled.CenterText>WWW</Styled.CenterText>
     </Styled.Wrapper>
   );
 };

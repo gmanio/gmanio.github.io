@@ -1,3 +1,6 @@
 import React from 'react';
+// import withHeaders from '../../hocs/withHeader';
 
-export default React.lazy(() => import(/* webpackChunkName: "MainPage" */'./MainPage'));
+const MainPage = React.lazy(() => import(/* webpackChunkName: "MainPage" */'./MainPage'));
+
+export default MainPage;

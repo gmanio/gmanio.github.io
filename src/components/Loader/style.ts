@@ -8,7 +8,7 @@ export const RoundAnimation = keyframes`
   50% {
     transform: rotateZ(360deg);
   }
-  
+
   100% {
     transform: rotateZ(0deg);
   }
@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
   min-height: 500px;
   justify-content: center;
   align-items: center;
+  user-select: none;
 `;
 
 export const HexagonWrapper = styled.div`
@@ -46,10 +47,8 @@ export const Hexagon = styled.div`
   display: flex;
   width: 100px;
   height: 58px;
-  color: rgba(255, 255, 255, 0.3);
   font-size: 16px;
-  background-color: transparent;
-  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.1);
 
   &:before, &:after {
     content: "";
@@ -59,7 +58,7 @@ export const Hexagon = styled.div`
     right: 0;
     bottom: 0;
     background-color: inherit;
-    border: 1px solid black;
+    border: inherit;
   }
 
   &::before {
@@ -73,4 +72,11 @@ export const Hexagon = styled.div`
   &, &:before, &:after {
     animation: 4s ${ChangeAnimation} ease-in-out infinite;
   }
+`;
+
+export const CenterText = styled.div`
+  position: absolute;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 `;
