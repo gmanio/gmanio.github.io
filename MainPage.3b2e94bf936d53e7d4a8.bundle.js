@@ -1,0 +1,2 @@
+(self.webpackChunkmy_webpack_project=self.webpackChunkmy_webpack_project||[]).push([[475],{5850:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return f}});var r,c=t(9976),u=function(e,n){return Object.defineProperty?Object.defineProperty(e,"raw",{value:n}):e.raw=n,e},l=t(9163).ZP.div(r||(r=u(["\n  display: flex;\n"],["\n  display: flex;\n"]))),a=t(1769),f=function(){return c.createElement(l,null,c.createElement(a.Z,null))}}}]);
+//# sourceMappingURL=MainPage.3b2e94bf936d53e7d4a8.bundle.js.map

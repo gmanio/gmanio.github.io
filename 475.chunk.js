@@ -1,2 +1,0 @@
-(self.webpackChunkmy_webpack_project=self.webpackChunkmy_webpack_project||[]).push([[475],{5850:function(e,n,t){"use strict";t.r(n),t.d(n,{default:function(){return f}});var r,c,l,a=t(9976),u=t(9163).ZP.div(r||(c=["\n  display: flex;\n"],l=["\n  display: flex;\n"],Object.defineProperty?Object.defineProperty(c,"raw",{value:l}):c.raw=l,r=c)),p=t(1769);const f=function(){return a.createElement(u,null,a.createElement(p.Z,null))}}}]);
-//# sourceMappingURL=475.chunk.js.map
