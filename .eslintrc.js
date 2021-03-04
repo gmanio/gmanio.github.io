@@ -30,7 +30,6 @@ module.exports = {
     'react/no-deprecated': 'off',
     'react/no-string-refs': 'off',
     'react/require-render-return': 'off',
-
     'react/jsx-filename-extension': [
       'warn',
       {

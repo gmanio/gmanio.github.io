@@ -1,14 +1,15 @@
 import React from 'react';
-import Header from '../containers/Header';
+import Header from '../commons/Header';
 
-const withHeaders = <T extends Record<string, unknown>>(WrappedComponent: React.FC<T>) => {
+const withHeader = <T extends Record<string, unknown>>(WrappedComponent: React.FC<T>) => {
   return (props: T): JSX.Element => {
     return (
-      <Header>
+      <>
+        <Header />
         <WrappedComponent {...props} />
-      </Header>
+      </>
     );
   };
 };
 
-export default withHeaders;
+export default withHeader;

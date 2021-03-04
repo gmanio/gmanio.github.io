@@ -4,7 +4,7 @@ export const RoundAnimation = keyframes`
   0% {
     transform: rotateZ(0deg);
   }
-  
+
   50% {
     transform: rotateZ(360deg);
   }
@@ -23,6 +23,14 @@ export const Wrapper = styled.div`
   user-select: none;
 `;
 
+export const LoaderWrapper = styled.div`
+  display: inline-flex;
+  min-width: 200px;
+  min-height: 200px;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const HexagonWrapper = styled.div`
   display: flex;
   animation: 4s ${RoundAnimation} ease-in-out infinite;
@@ -32,11 +40,11 @@ export const ChangeAnimation = keyframes`
   0% {
     border-radius: 0%/0%;
   }
-  
+
   50% {
     border-radius: 100%/100%;
   }
-  
+
   100% {
     border-radius: 0%/0%;
   }
