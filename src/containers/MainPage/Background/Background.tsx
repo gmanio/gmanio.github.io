@@ -12,7 +12,6 @@ const Background: React.FC = () => {
 
   return (
     <Styled.Wrapper>
-      test
       <Styled.Logo/>
     </Styled.Wrapper>
   );
