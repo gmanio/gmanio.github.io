@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from './style';
 
-const Card: React.FC = () => {
+const Header: React.FC = () => {
   return (
     <Styled.HeaderWrapper position={'relative'}>
       <Styled.HeaderToolbar>
@@ -15,4 +15,4 @@ const Card: React.FC = () => {
   );
 };
 
-export default Card;
+export default Header;

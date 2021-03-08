@@ -9,13 +9,13 @@ import Loader from './commons/Loader';
 import GlobalProvider from './stores';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalProvider>
+  <GlobalProvider>
+    <React.StrictMode>
+      <GlobalStyles />
       <React.Suspense fallback={<Loader />}>
-        <GlobalStyles />
         <Routes />
       </React.Suspense>
-    </GlobalProvider>
-  </React.StrictMode>,
+    </React.StrictMode>
+  </GlobalProvider>,
   document.getElementById('app'),
 );

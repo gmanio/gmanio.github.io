@@ -1,24 +1,31 @@
 import * as React from 'react';
+// import { configure } from 'mobx';
+// configure({
+//   enforceActions: "always",
+//   useProxies: 'ifavailable',
+// });
 
 import UserStore from './user';
 
-export class RootStore {
+export type StoreProvider = React.FC<{
+  children: React.ReactNode;
+}>;
+
+const store = new class {
   userStore: UserStore;
 
   constructor() {
     this.userStore = new UserStore();
   }
-}
+};
 
-const store = new RootStore();
+type RootStore = {
+  userStore: UserStore
+};
 
 export const StoreContext = React.createContext<RootStore>({} as RootStore);
 
-export type StoreComponent = React.FC<{
-  children: React.ReactNode;
-}>;
-
-const GlobalProvider: StoreComponent = ({ children }): React.ReactElement => {
+const GlobalProvider: StoreProvider = ({ children }): React.ReactElement => {
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
 };
 

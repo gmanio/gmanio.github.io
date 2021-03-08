@@ -1,13 +1,24 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import fs from 'fs';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
+// import { ProgressPlugin } from 'webpack';
+// import path from 'path';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import fs from 'fs';
+// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import TerserPlugin from 'terser-webpack-plugin';
+
+const {ProgressPlugin} = require('webpack');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+
 // import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const isStorybook = process.env.STORYBOOK
 
 console.log(`NodeJS Build Mode : ${process.env.NODE_ENV}, isDevelopment: ${isDevelopment}`);
 
@@ -65,17 +76,16 @@ module.exports = {
             },
           },
         ],
-      },
+      }
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: 'main.[chunkhash].css' }),
     new HtmlWebpackPlugin({
-      template: './index.html',
-      favicon: './public/favicon/favicon.ico',
-      baseUrl: isProduction ? '/' : '/',
-      hash: true,
+      template: path.resolve(__dirname, 'index.html'),
+      favicon: path.resolve(__dirname, 'public/favicon/favicon.ico')
     }),
+    new ProgressPlugin(),
     // new ReactRefreshWebpackPlugin(),
     // new ForkTsCheckerWebpackPlugin(),
   ],

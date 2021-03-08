@@ -12,6 +12,7 @@ export const Logo = styled.div`
   width: 100%;
   min-height: 500px;
   opacity: 0.1;
+  background: url(${BGImage}) contain;
   /* background-size: contain; */
-  background: #eee;
+  /* background: #eee; */
 `;
