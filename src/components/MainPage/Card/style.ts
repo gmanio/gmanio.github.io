@@ -1,42 +1,26 @@
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-// import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import styled from 'styled-components';
-import MenuIcon from '@material-ui/icons/Menu';
+import Typography from '@material-ui/core/Typography';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import styled, { css } from 'styled-components';
 
-export const HeaderWrapper = styled(AppBar)`
-  display: flex;
-  position: relative;
-  padding: 0px 16px !important;
-  width: 100%;
-  height: 64px;
-  background-color: #fff !important;
-  box-shadow: 0px 1px 7px 0px rgb(0 0 0 / 10%) !important;
-  color: #3a3a3a !important;
-  justify-content: center;
+export const ExpandedIconButton = styled(IconButton)`
+  transition: all .3s ease-in-out !important;
+  transform: rotate(0deg);
+
+  ${(props: { isOpen: boolean }) => props.isOpen && css`
+    transform: rotate(180deg);
+    transition: all .3s ease-in-out !important;
+  `}
 `;
 
-export const HeaderToolbar = styled(Toolbar)({
-  padding: '0px !important',
-  margin: '0 auto',
-  width: '100%',
-  minHeight: '64px !important',
-  maxWidth: 1080
-});
-
-export const HeaderIconButton = IconButton;
-
-export const HeaderAvatar = styled(Avatar)`
-  position: absolute !important;
-  right: 0;
-`;
-
-export const HeaderTitle = styled(Typography)({
-  textAlign: 'center',
-  padding: '0 8px'
-});
-
-export { MenuIcon };
+export { FavoriteIcon, ShareIcon, ExpandMoreIcon, Card, CardHeader, Avatar, IconButton, MoreVertIcon, CardMedia, CardContent, Typography, CardActions };

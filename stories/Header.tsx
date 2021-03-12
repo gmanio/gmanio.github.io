@@ -7,7 +7,7 @@ export interface HeaderProps {
   user?: {};
   onLogin: () => void;
   onLogout: () => void;
-  onCreateAccount: () => void;
+  onCreateAccount: () => void; /* 온클릭 이벤트 */
 }
 
 export const Header: React.FC<HeaderProps> = ({ user, onLogin, onLogout, onCreateAccount }) => (

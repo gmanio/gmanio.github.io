@@ -1,6 +1,8 @@
 import React from 'react';
 import * as Styled from './style';
 
+import Card from '../../../components/MainPage/Card';
+
 const Background: React.FC = () => {
   // const handleAddHomeIconButton = () => {
   //   navigator.share({
@@ -12,7 +14,8 @@ const Background: React.FC = () => {
 
   return (
     <Styled.Wrapper>
-      <Styled.Logo/>
+      {/* <Styled.Logo/> */}
+      <Card/>
     </Styled.Wrapper>
   );
 };

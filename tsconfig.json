@@ -19,7 +19,7 @@
   },
   "include": [
     "src"
-  ],
+, "stories"  ],
   "exclude": [
     "node_modules",
     "typings"

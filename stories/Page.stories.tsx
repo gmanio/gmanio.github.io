@@ -8,7 +8,7 @@ import * as HeaderStories from './Header.stories';
 export default {
   title: 'Example/Page',
   component: Page,
-};
+} as Meta;
 
 const Template: Story<PageProps> = (args) => <Page {...args} />;
 

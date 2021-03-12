@@ -20,7 +20,6 @@ const MainPage: React.FC = () => {
 
   return (
     <Styled.Wrapper>
-      {userStore.name}
       <Background />
     </Styled.Wrapper>
   );
