@@ -2,28 +2,37 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../theme";
+import theme from "../styles/theme";
 import createEmotionCache from "../createEmotionCache";
 
 export default class MyDocument extends Document {
   render() {
-    const GOOGLE_ANALYTICS = 'G-J37XHPSSP9';
+    const GOOGLE_ANALYTICS = "G-J37XHPSSP9";
     return (
       <Html lang="ko">
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86"
+          />
           <meta name="description" content="powered by React" />
           <meta name="keywords" content="GMAN.IO, JIMAN PARK" />
           <meta name="robots" content="index, follow" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff"/>
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="#ffffff"
+          />
           <meta name="apple-mobile-web-app-title" content="GMAN.IO" />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS}`}></script>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS}`}
+          ></script>
           <script
             dangerouslySetInnerHTML={{
               __html: `

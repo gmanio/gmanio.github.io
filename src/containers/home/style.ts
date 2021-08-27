@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
 
+import { glitch, blur } from "../../styles/keyframes";
+
 export const BasePage = styled(Paper)`
   display: flex;
   width: 100%;
@@ -25,19 +27,34 @@ export const ContentContainer = styled(Container)`
   display: flex;
   width: 100%;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const BackgroundImageWrapper = styled.div`
+  margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 100%;
-  min-height: 505px;
+  width: 80%;
+  animation: ${blur} 10s ease 1s infinite;
 `;
 
 export const DwarfImage = styled.img`
   display: inline-flex;
   width: 100%;
   height: auto;
+`;
+
+export const ImageDescription = styled.div`
+  margin-top: 30px;
+  margin-left: -30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 40px;
+  font-family: 'Caveat';
+  animation: ${glitch} 3s steps(100) infinite;
 `;

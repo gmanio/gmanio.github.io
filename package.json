@@ -7,14 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && git push origin `git subtree split --prefix out main`:gh-pages --force"
+    "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && npm run gh-pages",
+    "gh-pages": "gh-pages -d out"
   },
   "dependencies": {
+    "@emotion/cache": "latest",
     "@emotion/react": "^11.4.1",
+    "@emotion/server": "latest",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^5.0.0-beta.5",
-    "@emotion/server": "latest",
-    "@emotion/cache": "latest",
+    "moment": "^2.29.1",
     "next": "11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
