@@ -2,8 +2,8 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
+import theme from "../theme";
+import createEmotionCache from "../createEmotionCache";
 
 export default class MyDocument extends Document {
   render() {
@@ -11,7 +11,13 @@ export default class MyDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
-          {/* PWA primary color */}
+          <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86" />
+          <meta name="description" content="powered by React" />
+          <meta name="keywords" content="GMAN.IO, JIMAN PARK" />
+          <meta name="robots" content="index, follow" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff"/>
+          <meta name="apple-mobile-web-app-title" content="GMAN.IO" />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
