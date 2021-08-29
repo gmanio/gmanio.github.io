@@ -34,6 +34,7 @@ const Home: NextPage = () => {
       return key;
     }
   });
+
   return (
     <BasePage>
       <Head>

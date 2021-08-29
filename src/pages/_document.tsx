@@ -7,7 +7,7 @@ import createEmotionCache from "../createEmotionCache";
 
 export default class MyDocument extends Document {
   render() {
-    const GOOGLE_ANALYTICS = "G-J37XHPSSP9";
+    const GOOGLE_ANALYTICS = "G-Y1S2JZE6CT";
     return (
       <Html lang="ko">
         <Head>
@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
-            content="#ffffff"
+            content={theme.palette.primary.main}
           />
           <meta name="apple-mobile-web-app-title" content="GMAN.IO" />
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -39,9 +39,7 @@ export default class MyDocument extends Document {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${GOOGLE_ANALYTICS}', {
-                page_path: window.location.pathname,
-              });
+              gtag('config', '${GOOGLE_ANALYTICS}');
           `,
             }}
           />
