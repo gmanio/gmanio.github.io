@@ -25,8 +25,8 @@ export default async function handler(
     });
     const page = await browser.newPage();
     const urlParams = new URLSearchParams({ pblancId: pblancId.toString() });
-
     await page.goto(`${baseUrl}?${urlParams.toString()}`);
+    
     const content = await page.content();
     const body = $.load(content);
     const type = body(".viewTop > span").text();
