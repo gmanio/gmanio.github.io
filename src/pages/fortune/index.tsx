@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-// import ZodiacLoader from '../component/Loader';
 import Head from 'next/head';
 
 const Zodiac = () => {
@@ -10,13 +9,11 @@ const Zodiac = () => {
   const [response, setResponse] = useState<any>(null);
   const fetchData = () => {
     setIsLoading(true);
-    fetch(`/api/fortune?day=${dayType}&tti=${ttiType}`)
+    fetch(`https://s7a3nm4eh3.execute-api.ap-northeast-2.amazonaws.com/v1?day=${dayType}&tti=${ttiType}`)
       .then(async (res) => {
         const result = await res.json();
         setResponse(result);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1500);
+        setIsLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -29,7 +26,7 @@ const Zodiac = () => {
   }, []);
 
   useEffect(() => {
-    fetchData();
+    !isLoading && fetchData();
   }, [ttiType, dayType]);
 
   return (
@@ -126,15 +123,15 @@ const Zodiac = () => {
           </ZodiacAnimalWrapper>
         </Header>
         {isLoading && <>Loading</>}
-        {!isLoading && response && response?.success && (
+        {!isLoading && response && (
           <ContentWrapper className={'bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500'}>
             <MainZodiacWrapper>
-              <MainZodiacIcon>{response.data.mainFortuneType}</MainZodiacIcon>
-              <MainZodiacFortune>{response.data.mainFortuneContent}</MainZodiacFortune>
+              <MainZodiacIcon>{response.mainFortuneType}</MainZodiacIcon>
+              <MainZodiacFortune>{response.mainFortuneContent}</MainZodiacFortune>
             </MainZodiacWrapper>
 
             <SubFortunesWrapper>
-              {response.data.contents.map((fortune: any, index: number) => {
+              {response.contents.map((fortune: any, index: number) => {
                 return (
                   <SubFortune key={index}>
                     <SubFortuneTitle>{fortune.title} 년생</SubFortuneTitle>
