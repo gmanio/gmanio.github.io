@@ -9,7 +9,7 @@
     "lint": "next lint",
     "export": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && cp .nojekyll ./out && cp CNAME ./out",
     "deploy": "gh-pages -d out -t",
-    "pm2": "pm2 start npm --name 'next' start"
+    "pm2": "pm2"
   },
   "dependencies": {
     "@material-ui/core": "^5.0.0-beta.5",
