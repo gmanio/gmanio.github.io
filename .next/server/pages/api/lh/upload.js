@@ -144,43 +144,29 @@ async function handler(req, res) {
       let plansInfo = {};
       let supplyInfos = [];
       el.querySelectorAll("tr").forEach(row => {
-        if (row.querySelector("th").innerText === "모집공고일") {
+        if (row.querySelector("th") && row.querySelector("th").innerText === "모집공고일") {
           Object.assign(plansInfo, {
             planDate: row.querySelector("td").innerText
           });
           return;
         }
 
-        if (row.querySelector("th").innerText === "당첨자 발표일") {
+        if (row.querySelector("th") && row.querySelector("th").innerText === "당첨자 발표일") {
           Object.assign(plansInfo, {
             lotteryDate: row.querySelector("td").innerText
           });
           return;
         }
 
-        if (row.querySelector("th").innerText === "일정관련 안내사항") {
+        if (row.querySelector("th") && row.querySelector("th").innerText === "일정관련 안내사항") {
           Object.assign(plansInfo, {
             planNoticeInfo: row.querySelector("td").innerText
           });
           return;
-        } // if (row.querySelectorAll("th").length === 1) {
-        //   supplyInfos.push({
-        //     supplyType: "일반공급",
-        //     priority: row.querySelector("th").innerText,
-        //     conditions: Array.from(row.querySelectorAll("td dt")).map(
-        //       (dt: any) => {
-        //         return {
-        //           title: dt.innerText,
-        //           description: dt.nextElementSibling.innerText,
-        //         };
-        //       }
-        //     ),
-        //   });
-        // }
-
+        }
 
         const thLength = row.querySelectorAll("th").length;
-        const rowSpan = parseInt(row.querySelector("th").getAttribute("rowspan"), 10);
+        const rowSpan = row.querySelector("th") && parseInt(row.querySelector("th").getAttribute("rowspan"), 10);
 
         if (thLength === 1 && !!rowSpan) {
           supplyInfos.push({
@@ -198,7 +184,7 @@ async function handler(req, res) {
         if (thLength === 2 && rowSpan === 2) {
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: row.querySelectorAll("th")[1].innerText,
+            priority: row.querySelectorAll("th").length > 1 ? row.querySelectorAll("th")[1].innerText : "1순위",
             conditions: Array.from(row.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
@@ -209,7 +195,7 @@ async function handler(req, res) {
           const nextRow = row.nextElementSibling;
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: nextRow.querySelector("th").innerText,
+            priority: nextRow.querySelector("th") ? nextRow.querySelector("th").innerText : "1순위",
             conditions: Array.from(nextRow.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
@@ -222,7 +208,7 @@ async function handler(req, res) {
         if (thLength === 2 && rowSpan === 3) {
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: row.querySelectorAll("th")[1].innerText,
+            priority: row.querySelectorAll("th").length > 1 ? row.querySelectorAll("th")[1].innerText : "1순위",
             conditions: Array.from(row.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
@@ -233,7 +219,7 @@ async function handler(req, res) {
           const nextRow = row.nextElementSibling;
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: nextRow.querySelector("th").innerText,
+            priority: nextRow.querySelector("th") ? nextRow.querySelector("th").innerText : "1순위",
             conditions: Array.from(nextRow.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
@@ -244,7 +230,7 @@ async function handler(req, res) {
           const nextnextRow = nextRow.nextElementSibling;
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: nextnextRow.querySelector("th").innerText,
+            priority: nextnextRow.querySelector("th") ? nextnextRow.querySelector("th").innerText : "1순위",
             conditions: Array.from(nextnextRow.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
