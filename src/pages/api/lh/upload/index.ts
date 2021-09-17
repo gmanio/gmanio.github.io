@@ -177,15 +177,32 @@ export default async function handler(
           return;
         }
         const thLength = row.querySelectorAll("th").length;
-        const rowSpan = row.querySelector("th") && parseInt(
-          row.querySelector("th").getAttribute("rowspan"),
-          10
-        );
+        const rowSpan =
+          row.querySelector("th") &&
+          parseInt(row.querySelector("th").getAttribute("rowspan"), 10);
 
         if (thLength === 1 && !!rowSpan) {
           supplyInfos.push({
             supplyType: row.querySelector("th").innerText,
             priority: "1순위",
+            conditions: Array.from(row.querySelectorAll("td dt")).map(
+              (dt: any) => {
+                return {
+                  title: dt.innerText,
+                  description: dt.nextElementSibling.innerText,
+                };
+              }
+            ),
+          });
+        }
+
+        if (thLength === 2 && rowSpan === 1) {
+          supplyInfos.push({
+            supplyType: row.querySelectorAll("th")[0].innerText,
+            priority:
+              row.querySelectorAll("th").length > 1
+                ? row.querySelectorAll("th")[1].innerText
+                : "1순위",
             conditions: Array.from(row.querySelectorAll("td dt")).map(
               (dt: any) => {
                 return {

@@ -181,6 +181,19 @@ async function handler(req, res) {
           });
         }
 
+        if (thLength === 2 && rowSpan === 1) {
+          supplyInfos.push({
+            supplyType: row.querySelectorAll("th")[0].innerText,
+            priority: row.querySelectorAll("th").length > 1 ? row.querySelectorAll("th")[1].innerText : "1순위",
+            conditions: Array.from(row.querySelectorAll("td dt")).map(dt => {
+              return {
+                title: dt.innerText,
+                description: dt.nextElementSibling.innerText
+              };
+            })
+          });
+        }
+
         if (thLength === 2 && rowSpan === 2) {
           supplyInfos.push({
             supplyType: row.querySelectorAll("th")[0].innerText,
