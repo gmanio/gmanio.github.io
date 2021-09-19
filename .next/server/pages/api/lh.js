@@ -31,8 +31,8 @@ async function handler(req, res) {
       pblancId
     } = req.query;
     const browser = await puppeteer__WEBPACK_IMPORTED_MODULE_0___default().launch({
-      headless: false,
-      devtools: true
+      headless: true,
+      devtools: false
     });
     const page = await browser.newPage();
     const urlParams = new URLSearchParams({

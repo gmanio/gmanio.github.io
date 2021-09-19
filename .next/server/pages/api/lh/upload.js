@@ -42,8 +42,8 @@ async function handler(req, res) {
       pblancId
     } = req.query;
     const browser = await external_puppeteer_default().launch({
-      headless: false,
-      devtools: true
+      headless: true,
+      devtools: false
     });
     const page = await browser.newPage();
     const urlParams = new URLSearchParams({

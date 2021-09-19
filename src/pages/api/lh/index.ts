@@ -22,8 +22,8 @@ export default async function handler(
     const { pblancId } = req.query;
 
     const browser = await puppeteer.launch({
-      headless: false,
-      devtools: true,
+      headless: true,
+      devtools: false,
     });
 
     const page = await browser.newPage();
