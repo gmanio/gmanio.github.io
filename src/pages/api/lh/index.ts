@@ -22,8 +22,8 @@ export default async function handler(
     const { pblancId } = req.query;
 
     const browser = await puppeteer.launch({
-      headless: true,
-      devtools: false,
+      headless: false,
+      devtools: true,
     });
 
     const page = await browser.newPage();
@@ -31,6 +31,7 @@ export default async function handler(
     await page.goto(`${baseUrl}?${urlParams.toString()}`);
 
     const articleId = parseInt(pblancId.toString(), 10);
+
     const basicInfos = await page.$eval(".viewArea", (el: any) => {
       let basicInfos = {};
 
@@ -78,23 +79,23 @@ export default async function handler(
       await node.click();
 
       const danjiInfo = await page.$eval(".danjiInfo", (el: any) => {
-        const dowunloadEl = el.querySelector("td > a");
+        const downloadEl = el.querySelector("td > a");
         const supplyInfosEl = el.querySelector("#suplyTableBody");
 
         const rows = supplyInfosEl.children;
         const supplyInfos = Array.from(rows).map((row: any) => {
           const children = row.children;
           return {
-            type: children[0].textContent,
-            exclusive: children[1].textContent,
-            totalNumber: children[2].textContent,
-            priorityNumber: children[3].textContent,
-            normalNumber: children[4].textContent,
-            totalAmount: children[4].textContent,
-            depositAmount: children[5].textContent,
-            middleAmount: children[6].textContent,
-            remainAmount: children[7].textContent,
-            monthlyAmount: children[8].textContent,
+            type: children[0].innerText,
+            exclusive: children[1].innerText,
+            totalNumber: children[2].innerText,
+            priorityNumber: children[3].innerText,
+            normalNumber: children[4].innerText,
+            totalAmount: children[4].innerText,
+            depositAmount: children[5].innerText,
+            middleAmount: children[6].innerText,
+            remainAmount: children[7].innerText,
+            monthlyAmount: children[8].innerText,
           };
         });
 
@@ -110,8 +111,8 @@ export default async function handler(
           reference: el.querySelector("#refrnc").innerText.trim(),
           etc: el.querySelector("#partclrMatter").innerText.trim(),
           download: {
-            filename: dowunloadEl.innerText.trim(),
-            link: dowunloadEl.href,
+            filename: downloadEl ? downloadEl.innerText.trim() : "",
+            link: downloadEl ? downloadEl.href : "",
           },
           supplyInfos,
         };
@@ -177,10 +178,9 @@ export default async function handler(
           return;
         }
         const thLength = row.querySelectorAll("th").length;
-        const rowSpan = row.querySelector("th") && parseInt(
-          row.querySelector("th").getAttribute("rowspan"),
-          10
-        );
+        const rowSpan =
+          row.querySelector("th") &&
+          parseInt(row.querySelector("th").getAttribute("rowspan"), 10);
 
         if (thLength === 1 && !!rowSpan) {
           supplyInfos.push({
