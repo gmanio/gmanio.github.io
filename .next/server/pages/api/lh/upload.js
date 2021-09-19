@@ -42,8 +42,8 @@ async function handler(req, res) {
       pblancId
     } = req.query;
     const browser = await external_puppeteer_default().launch({
-      headless: true,
-      devtools: false
+      headless: false,
+      devtools: true
     });
     const page = await browser.newPage();
     const urlParams = new URLSearchParams({
@@ -88,22 +88,22 @@ async function handler(req, res) {
     for (const node of Array.from(list)) {
       await node.click();
       const danjiInfo = await page.$eval(".danjiInfo", el => {
-        const dowunloadEl = el.querySelector("td > a");
+        const downloadEl = el.querySelector("td > a");
         const supplyInfosEl = el.querySelector("#suplyTableBody");
         const rows = supplyInfosEl.children;
         const supplyInfos = Array.from(rows).map(row => {
           const children = row.children;
           return {
-            type: children[0].textContent,
-            exclusive: children[1].textContent,
-            totalNumber: children[2].textContent,
-            priorityNumber: children[3].textContent,
-            normalNumber: children[4].textContent,
-            totalAmount: children[4].textContent,
-            depositAmount: children[5].textContent,
-            middleAmount: children[6].textContent,
-            remainAmount: children[7].textContent,
-            monthlyAmount: children[8].textContent
+            type: children[0].innerText,
+            exclusive: children[1].innerText,
+            totalNumber: children[2].innerText,
+            priorityNumber: children[3].innerText,
+            normalNumber: children[4].innerText,
+            totalAmount: children[4].innerText,
+            depositAmount: children[5].innerText,
+            middleAmount: children[6].innerText,
+            remainAmount: children[7].innerText,
+            monthlyAmount: children[8].innerText
           };
         });
         return {
@@ -118,8 +118,8 @@ async function handler(req, res) {
           reference: el.querySelector("#refrnc").innerText.trim(),
           etc: el.querySelector("#partclrMatter").innerText.trim(),
           download: {
-            filename: dowunloadEl.innerText.trim(),
-            link: dowunloadEl.href
+            filename: downloadEl ? downloadEl.innerText.trim() : "",
+            link: downloadEl ? downloadEl.href : ""
           },
           supplyInfos
         };
@@ -172,19 +172,6 @@ async function handler(req, res) {
           supplyInfos.push({
             supplyType: row.querySelector("th").innerText,
             priority: "1순위",
-            conditions: Array.from(row.querySelectorAll("td dt")).map(dt => {
-              return {
-                title: dt.innerText,
-                description: dt.nextElementSibling.innerText
-              };
-            })
-          });
-        }
-
-        if (thLength === 2 && rowSpan === 1) {
-          supplyInfos.push({
-            supplyType: row.querySelectorAll("th")[0].innerText,
-            priority: row.querySelectorAll("th").length > 1 ? row.querySelectorAll("th")[1].innerText : "1순위",
             conditions: Array.from(row.querySelectorAll("td dt")).map(dt => {
               return {
                 title: dt.innerText,
