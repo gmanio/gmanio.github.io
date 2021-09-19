@@ -51,13 +51,13 @@ export default async function handler(
     };
 
     const storeAsImage = await fromBuffer(Buffer.from(response.data), options);
-    const images = await storeAsImage.bulk(-1, false);
+    const images: any = await storeAsImage(-1, false);
 
     const formData = {
       subject: subject,
       content: content,
       image: [
-        ...images.map((image) => {
+        ...images.map((image: any) => {
           const dir = process.cwd();
 
           return {
