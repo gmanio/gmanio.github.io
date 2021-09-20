@@ -29,7 +29,7 @@ export default async function handler(
   const menuid = 17; // 카페 게시판 id (상품게시판은 입력 불가)
 
   const responseParser = await axios.get(
-    `http://front.tumblbug.com:3000/api/lh?pblancId=${pblancId}`
+    `http://localhost:3000/api/lh?pblancId=${pblancId}`
   );
 
   const parserTitleType = `[${responseParser.data.result.articleType}]`;

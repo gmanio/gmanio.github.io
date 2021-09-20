@@ -1,14 +1,7 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/api/cafe": "pages/api/cafe.js",
-  "/api/hello": "pages/api/hello.js",
-  "/api/lh": "pages/api/lh.js",
-  "/api/lh/upload": "pages/api/lh/upload.js",
-  "/api/naver/login/callback": "pages/api/naver/login/callback.js",
-  "/api/naver/login": "pages/api/naver/login.js",
-  "/fortune": "pages/fortune.html",
-  "/": "pages/index.html",
   "/_error": "pages/_error.js",
-  "/404": "pages/404.html"
+  "/api/cafe": "pages/api/cafe.js",
+  "/api/lh": "pages/api/lh.js"
 }
