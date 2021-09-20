@@ -9,7 +9,7 @@
     "lint": "next lint",
     "export": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && cp .nojekyll ./out && cp CNAME ./out",
     "deploy": "gh-pages -d out -t",
-    "pm2": "pm2 startOrReload -i max  npm --name leaseProject -- run dev"
+    "pm2": "pm2 startOrReload --node-args=\"--max-old-space-size=1024\" -i max npm --name \"leaseProject\" -- run dev"
   },
   "dependencies": {
     "@material-ui/core": "^5.0.0-beta.5",
