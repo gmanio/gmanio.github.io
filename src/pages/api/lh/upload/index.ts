@@ -304,8 +304,8 @@ export default async function handler(
 
     try {
       const s3 = new AWS.S3({
-        accessKeyId: "AKIAXW3POAMCWWENDUP6",
-        secretAccessKey: "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",
+        accessKeyId: "AKIAXW3POAMCU54ICH7I",
+        secretAccessKey: "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",
         region: "ap-northeast-2",
       });
 
