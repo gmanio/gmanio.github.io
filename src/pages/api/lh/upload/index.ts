@@ -103,7 +103,7 @@ export default async function handler(
 
         return {
           name: el.querySelector("#hsmpNmUl>.on").innerText,
-          address: el.querySelector("#fullAdres").innerText.trim(),
+          address: el.querySelector("#fullAdres").firstChild.nodeValue.trim(),
           totalUnit: el.querySelector("#totHshldCo").innerText.trim(),
           supplyUnit: el.querySelector("#lttotHoCo").innerText.trim(),
           entranceYear: el.querySelector("#mvnPrearngeYear").innerText.trim(),
