@@ -14,6 +14,8 @@ type Data = {
 const baseUrl =
   "https://www.myhome.go.kr/hws/portal/sch/selectRsdtRcritNtcDetailView.do";
 
+  // const baseUrl =
+  // "https://www.myhome.go.kr/hws/portal/sch/selectLttotHouseDetailView.do";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -111,8 +113,8 @@ export default async function handler(
           reference: el.querySelector("#refrnc").innerText.trim(),
           etc: el.querySelector("#partclrMatter").innerText.trim(),
           download: {
-            filename: downloadEl ? downloadEl.innerText.trim() : "",
-            link: downloadEl ? downloadEl.href : "",
+            filename: !!downloadEl ? downloadEl.innerText.trim() : "",
+            link: !!downloadEl ? downloadEl.href : "",
           },
           supplyInfos,
         };
@@ -186,6 +188,24 @@ export default async function handler(
           supplyInfos.push({
             supplyType: row.querySelector("th").innerText,
             priority: "1순위",
+            conditions: Array.from(row.querySelectorAll("td dt")).map(
+              (dt: any) => {
+                return {
+                  title: dt.innerText,
+                  description: dt.nextElementSibling.innerText,
+                };
+              }
+            ),
+          });
+        }
+
+        if (thLength === 2 && !!rowSpan) {
+          supplyInfos.push({
+            supplyType: row.querySelectorAll("th")[0].innerText,
+            priority:
+              row.querySelectorAll("th").length > 1
+                ? row.querySelectorAll("th")[1].innerText
+                : "1순위",
             conditions: Array.from(row.querySelectorAll("td dt")).map(
               (dt: any) => {
                 return {

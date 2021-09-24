@@ -10,11 +10,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { code } = req.query;
+  const { code, state } = req.query;
   res.status(200).json({
     error: false,
     errorMessage: "",
-    result: { access_token: code },
+    result: { access_token: code, state: state },
     statusCode: 200,
   });
 }
