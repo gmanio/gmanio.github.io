@@ -93,11 +93,11 @@ export default async function handler(
             totalNumber: children[2].innerText,
             priorityNumber: children[3].innerText,
             normalNumber: children[4].innerText,
-            totalAmount: children[4].innerText,
-            depositAmount: children[5].innerText,
-            middleAmount: children[6].innerText,
-            remainAmount: children[7].innerText,
-            monthlyAmount: children[8].innerText,
+            totalAmount: children[5].innerText,
+            depositAmount: children[6].innerText,
+            middleAmount: children[7].innerText,
+            remainAmount: children[8].innerText,
+            monthlyAmount: children[9].innerText,
           };
         });
 
