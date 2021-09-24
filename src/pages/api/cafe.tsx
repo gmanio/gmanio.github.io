@@ -41,14 +41,18 @@ export default async function handler(
   const content = `
     <div style='display:flex; flex-direction:column;'>
       <div style='display:flex; flex-direction:column;'>
-        <span style='font-size: 15px; line-height: 20px; color:#333;'>임대분석가가 알려드린 오늘의 공고.</span>
         <span style='font-size: 15px; line-height: 20px; color:#333;'>
+          임대분석가가 알려드린 오늘의 공고.<br>
           <strong>${parserTitle}</strong> 에 대해 도움이 되셨나요?
         </span>
-        <span style='margin-top: 20px; font-size: 15px; line-height: 20px; color:#333;'>상세한 정보가 궁금하시다면 </span>
-        <span style='font-size: 15px; line-height: 20px; color:#333;'>하단의 홈페이지 링크와 pdf파일 다운로드버튼을 이용해보세요.</span>
-        <span style='margin-top: 20px; font-size: 15px; line-height: 20px; color:#333;'>도움이 되셨다면 댓글도 함께 달아주시는 센스!</span>
-        <span style='font-size: 15px; line-height: 20px; color:#333;'>오늘 하루도 행복하세요 :)</span>
+        <span style='margin-top: 20px; font-size: 15px; line-height: 20px; color:#333;'>
+          상세한 정보가 궁금하시다면 <br>
+          하단의 홈페이지 링크와 pdf파일 다운로드버튼을 이용해보세요. 
+        </span>
+        <span style='margin-top: 20px; font-size: 15px; line-height: 20px; color:#333;'>
+          도움이 되셨다면 댓글도 함께 달아주시는 센스!<br>
+          오늘 하루도 행복하세요 :)
+        </span>
       </div>
       <div style='display:flex;flex-direction:column;justify-content:space-between;'>
         <a style='display:flex;justify-content: center; align-items: center; min-height: 50px; font-size: 22px; line-height: 28px; font-weight: bold; text-decoration: none; box-sizing:border-box; border:1px dashed #333; color: #666;' href=${parserDetailLink}>공고 자세히 보기</a>
@@ -59,36 +63,35 @@ export default async function handler(
   const formData = new FromData();
 
   formData.append("subject", subject.toString());
-  formData.append("content", iconv.encode(content, "EUC-KR"));
+  formData.append("content", iconv.encode(content.trim(), "EUC-KR"));
 
   try {
-    // const response = await axios.get(fileLink, {
-    //   responseType: "arraybuffer",
-    // });
+    const response = await axios.get(fileLink, {
+      responseType: "arraybuffer",
+    });
 
-    // const options = {
-    //   density: 100,
-    //   saveFilename: "file",
-    //   savePath: "./public/pdf",
-    //   format: "png",
-    //   width: 960,
-    //   height: 1280,
-    // };
+    const options = {
+      density: 100,
+      saveFilename: "file",
+      savePath: "./public/pdf",
+      format: "png",
+      width: 960,
+      height: 1280,
+    };
 
-    // const storeAsImage: any = await fromBuffer(
-    //   Buffer.from(response.data),
-    //   options
-    // );
-    // const images: any = await storeAsImage.bulk(-1, false);
+    const storeAsImage: any = await fromBuffer(
+      Buffer.from(response.data),
+      options
+    );
+    const images: any = await storeAsImage.bulk(-1, false);
 
-    // images.map((image: any) =>
-    //   formData.append(
-    //     "image",
-    //     fs.createReadStream(`${process.cwd()}/public/pdf/${image.name}`)
-    //   )
-    // );
-    console.log('finished');
-    
+    images.map((image: any) =>
+      formData.append(
+        "image",
+        fs.createReadStream(`${process.cwd()}/public/pdf/${image.name}`)
+      )
+    );
+
     const postResponse = await axios.post(
       `https://openapi.naver.com/v1/cafe/${clubid}/menu/${menuid}/articles`,
       formData,
