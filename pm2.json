@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "my-app",
+            "name": "lease-project",
             "script": "npm",
             "args" : "start",
             "instances": "max",

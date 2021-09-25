@@ -14,8 +14,8 @@ type Data = {
 const baseUrl =
   "https://www.myhome.go.kr/hws/portal/sch/selectRsdtRcritNtcDetailView.do";
 
-  // const baseUrl =
-  // "https://www.myhome.go.kr/hws/portal/sch/selectLttotHouseDetailView.do";
+// const baseUrl =
+// "https://www.myhome.go.kr/hws/portal/sch/selectLttotHouseDetailView.do";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -84,7 +84,8 @@ export default async function handler(
         const downloadEl = el.querySelector("td > a");
         const supplyInfosEl = el.querySelector("#suplyTableBody");
 
-        const rows = supplyInfosEl.children;
+        const rows = supplyInfosEl && supplyInfosEl.children ? supplyInfosEl.children : [];
+
         const supplyInfos = Array.from(rows).map((row: any) => {
           const children = row.children;
           return {
@@ -102,16 +103,16 @@ export default async function handler(
         });
 
         return {
-          name: el.querySelector("#hsmpNmUl>.on").innerText,
-          address: el.querySelector("#fullAdres").firstChild.nodeValue.trim(),
-          totalUnit: el.querySelector("#totHshldCo").innerText.trim(),
-          supplyUnit: el.querySelector("#lttotHoCo").innerText.trim(),
-          entranceYear: el.querySelector("#mvnPrearngeYear").innerText.trim(),
-          entranceMonth: el.querySelector("#mvnPrearngeMt").innerText.trim(),
-          heatType: el.querySelector("#heatMthdNm").innerText.trim(),
-          scale: el.querySelector("#dongCo").innerText.trim(),
-          reference: el.querySelector("#refrnc").innerText.trim(),
-          etc: el.querySelector("#partclrMatter").innerText.trim(),
+          name: el.querySelector("#hsmpNmUl>.on") && el.querySelector("#hsmpNmUl>.on").innerText,
+          address: el.querySelector("#fullAdres") && el.querySelector("#fullAdres").firstChild.nodeValue.trim(),
+          totalUnit: el.querySelector("#totHshldCo") && el.querySelector("#totHshldCo").innerText.trim(),
+          supplyUnit: el.querySelector("#lttotHoCo") && el.querySelector("#lttotHoCo").innerText.trim(),
+          entranceYear: el.querySelector("#mvnPrearngeYear") && el.querySelector("#mvnPrearngeYear").innerText.trim(),
+          entranceMonth: el.querySelector("#mvnPrearngeMt") && el.querySelector("#mvnPrearngeMt").innerText.trim(),
+          heatType: el.querySelector("#heatMthdNm") && el.querySelector("#heatMthdNm").innerText.trim(),
+          scale: el.querySelector("#dongCo") && el.querySelector("#dongCo").innerText.trim(),
+          reference: el.querySelector("#refrnc") && el.querySelector("#refrnc").innerText.trim(),
+          etc: el.querySelector("#partclrMatter") && el.querySelector("#partclrMatter").innerText.trim(),
           download: {
             filename: !!downloadEl ? downloadEl.innerText.trim() : "",
             link: !!downloadEl ? downloadEl.href : "",
