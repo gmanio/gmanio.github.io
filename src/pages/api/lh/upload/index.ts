@@ -22,8 +22,8 @@ export default async function handler(
     const { pblancId } = req.query;
 
     const browser = await puppeteer.launch({
-      headless: false,
-      devtools: true,
+      headless: true,
+      devtools: false,
     });
 
     let result = Object.assign({}, {});
@@ -111,8 +111,8 @@ export default async function handler(
               leaseInfo.push({
                 title: title,
                 values: [
-                  ...Array.from(table.querySelectorAll("tr")).map(
-                    (row: any) => {
+                  ...Array.from(table.querySelectorAll("tr"))
+                    .map((row: any) => {
                       let result = null;
 
                       if (row.querySelector("#mhshldTot")) {
@@ -140,7 +140,7 @@ export default async function handler(
                       }
 
                       if (
-                        row.querySelectorAll("th").length > 1 &&
+                        row.querySelectorAll("th") && row.querySelectorAll("th").length > 0 &&
                         row.querySelectorAll("td").length > 1
                       ) {
                         result = {
@@ -175,8 +175,8 @@ export default async function handler(
                       }
 
                       return result;
-                    }
-                  ),
+                    })
+                    .filter((item: any) => !!item),
                 ],
               });
             }
