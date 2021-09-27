@@ -64,6 +64,9 @@ export default async function handler(
 
   formData.append("subject", subject.toString());
   formData.append("content", iconv.encode(content.trim(), "EUC-KR"));
+  formData.append("openyn", true);
+  formData.append("searchopen	", true);
+  formData.append("ccl	", true);
 
   try {
     const response = await axios.get(fileLink, {
