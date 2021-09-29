@@ -11,10 +11,13 @@ type Data = {
   result: any;
   statusCode: number;
 };
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  await process.setMaxListeners(Infinity);
+
   const { pblancId } = req.query;
   const refresh_token =
     "0rt7KQtEipOXwCEToUG8WwIpMIPaPSqgMdk42T2FUSiiAubDipKjPbm5SmCw8riiyqMbLcwJ84CZ68iiuTIeZap12aQYgvZF3RZcVq1P33c5RuKkYkAIz1K3asDy3Tb9v9VdH";
@@ -64,9 +67,9 @@ export default async function handler(
 
   formData.append("subject", subject.toString());
   formData.append("content", iconv.encode(content.trim(), "EUC-KR"));
-  formData.append("openyn", true);
-  formData.append("searchopen	", true);
-  formData.append("ccl	", true);
+  formData.append("openyn", "true");
+  // formData.append("searchopen	", "true");
+  formData.append("ccl", "true");
 
   try {
     const response = await axios.get(fileLink, {
@@ -74,7 +77,7 @@ export default async function handler(
     });
 
     const options = {
-      density: 100,
+      density: 80,
       saveFilename: "file",
       savePath: "./public/pdf",
       format: "png",
@@ -86,9 +89,9 @@ export default async function handler(
       Buffer.from(response.data),
       options
     );
-    const images: any = await storeAsImage.bulk(-1, false);
+    const images: any = await storeAsImage.bulk([1,2,3,4,5], false);
 
-    images.map((image: any) =>
+    Array.from(images).map((image: any) =>
       formData.append(
         "image",
         fs.createReadStream(`${process.cwd()}/public/pdf/${image.name}`)
@@ -118,7 +121,7 @@ export default async function handler(
     res.status(500).json({
       statusCode: 500,
       error: true,
-      errorMessage: err.message,
+      errorMessage: err.stack,
       result: {},
     });
   }

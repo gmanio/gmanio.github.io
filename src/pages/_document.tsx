@@ -5,6 +5,8 @@ import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../styles/theme";
 import createEmotionCache from "../createEmotionCache";
 
+process.setMaxListeners(Infinity);
+
 export default class MyDocument extends Document {
   render() {
     const GOOGLE_ANALYTICS = "G-Y1S2JZE6CT";

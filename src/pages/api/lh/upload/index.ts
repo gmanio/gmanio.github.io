@@ -140,7 +140,8 @@ export default async function handler(
                       }
 
                       if (
-                        row.querySelectorAll("th") && row.querySelectorAll("th").length > 0 &&
+                        row.querySelectorAll("th") &&
+                        row.querySelectorAll("th").length > 0 &&
                         row.querySelectorAll("td").length > 1
                       ) {
                         result = {
@@ -185,27 +186,24 @@ export default async function handler(
               leaseInfo.push({
                 title: title,
                 values: [
-                  ...Array.from(table.querySelectorAll("tr")).map(
-                    (row: any) => {
+                  ...Array.from(table.querySelectorAll("tr"))
+                    .map((row: any) => {
                       const key =
                         row.querySelector("th") &&
                         row.querySelector("th").innerText;
 
                       if (key.indexOf("공고") > -1) {
-                        leaseInfo.push({
-                          title: "공고문",
-                          values: [
-                            {
-                              key:
-                                row.querySelector("a") &&
-                                row.querySelector("a").innerText.trim(),
-                              value:
-                                row.querySelector("a") &&
-                                row.querySelector("a").href,
-                            },
-                          ],
-                        });
-                        return;
+                        return {
+                          key: `공고문`,
+                          value: {
+                            filename:
+                              row.querySelector("a") &&
+                              row.querySelector("a").innerText.trim(),
+                            link:
+                              row.querySelector("a") &&
+                              row.querySelector("a").href,
+                          },
+                        };
                       }
 
                       return {
@@ -214,8 +212,8 @@ export default async function handler(
                           row.querySelector("td") &&
                           row.querySelector("td").innerText,
                       };
-                    }
-                  ),
+                    })
+                    .filter((item: any) => !!item),
                 ],
               });
             }
@@ -533,32 +531,66 @@ export default async function handler(
         result: {},
       });
     }
-    await browser.close();
 
-    const uploadParams = {
-      Bucket: "lease-project",
-      Key: `detail/lease-item-${pblancId}.json`,
-      ACL: "public-read",
-      Body: JSON.stringify(result),
-      ContentType: "application/json",
-    };
+    // const uploadParams = {
+    //   Bucket: "lease-project",
+    //   Key: `detail/lease-item-${pblancId}.json`,
+    //   ACL: "public-read",
+    //   Body: JSON.stringify(result),
+    //   ContentType: "application/json",
+    // };
 
+    // try {
+    //   const s3 = new AWS.S3({
+    //     accessKeyId: "AKIAXW3POAMCU54ICH7I",
+    //     secretAccessKey: "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",
+    //     region: "ap-northeast-2",
+    //   });
+
+    //   await s3.upload(uploadParams).promise();
+    // } catch (err) {
+    //   res.status(500).json({
+    //     statusCode: 500,
+    //     error: true,
+    //     errorMessage: "S3 upload Failed",
+    //     result: {},
+    //   });
+    // }
+
+    let articleCafeId = 0;
+
+    const naverCafeUrl = `https://cafe.naver.com/ArticleSearchList.nhn?search.clubid=30537001&search.searchdate=all&search.searchBy=0&search.query=${encodeURIComponent(
+      result.articleTitle
+    )}&search.defaultValue=1&search.menuid=4`;
+    
     try {
-      const s3 = new AWS.S3({
-        accessKeyId: "AKIAXW3POAMCU54ICH7I",
-        secretAccessKey: "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",
-        region: "ap-northeast-2",
+      await page.goto(
+        naverCafeUrl
+      );
+
+      const articleId = await page.$eval(".result-board", (el: any) => {
+        if (!el.querySelectorAll("tr")) {
+          return 0;
+        }
+
+        return Array.from(el.querySelectorAll("tr")).map((tr: any) => {
+          return tr.querySelector(".border-number .innernumber").innerText;
+        });
       });
 
-      await s3.upload(uploadParams).promise();
-    } catch (err) {
-      res.status(500).json({
-        statusCode: 500,
-        error: true,
-        errorMessage: "S3 upload Failed",
-        result: {},
-      });
+      articleCafeId = articleId && articleId[0];
+    } catch (err: any) {
+      // return res.status(500).json({
+      //   statusCode: 500,
+      //   error: true,
+      //   errorMessage: `get NaverCafeArticleId Error : ${err.message}`,
+      //   result: {},
+      // });
     }
+
+    result = Object.assign(result, { articleCafeId });
+
+    await browser.close();
 
     return res.status(200).json({
       statusCode: 200,
