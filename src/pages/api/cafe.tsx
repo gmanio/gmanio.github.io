@@ -39,8 +39,14 @@ export default async function handler(
   const parserTitle = responseParser.data.result.articleTitle;
   const parserDetailLink = responseParser.data.result.articleDetailLink;
   const subject = encodeURI(parserTitleType + " " + parserTitle);
-  const fileName = responseParser.data.result.danjiInfos[0].download.filename;
-  const fileLink = responseParser.data.result.danjiInfos[0].download.link;
+  const fileName =
+    responseParser.data.result.danjiInfos.length > 0
+      ? responseParser.data.result.danjiInfos[0].download.filename
+      : responseParser.data.result.leaseInfos.download.filename;
+  const fileLink =
+    responseParser.data.result.danjiInfos.length > 0
+      ? responseParser.data.result.danjiInfos[0].download.link
+      : responseParser.data.result.leaseInfos.download.link;
   const content = `
     <div style='display:flex; flex-direction:column;'>
       <div style='display:flex; flex-direction:column;'>
@@ -68,7 +74,6 @@ export default async function handler(
   formData.append("subject", subject.toString());
   formData.append("content", iconv.encode(content.trim(), "EUC-KR"));
   formData.append("openyn", "true");
-  // formData.append("searchopen	", "true");
   formData.append("ccl", "true");
 
   try {
@@ -77,12 +82,12 @@ export default async function handler(
     });
 
     const options = {
-      density: 80,
+      density: 72,
       saveFilename: "file",
       savePath: "./public/pdf",
-      format: "png",
+      format: "jpeg",
       width: 960,
-      height: 1280,
+      height: 1280
     };
 
     const storeAsImage: any = await fromBuffer(
@@ -91,7 +96,7 @@ export default async function handler(
     );
     const images: any = await storeAsImage.bulk([1,2,3,4,5], false);
 
-    Array.from(images).map((image: any) =>
+    Array.from(images).slice(0, 10).map((image: any) =>
       formData.append(
         "image",
         fs.createReadStream(`${process.cwd()}/public/pdf/${image.name}`)

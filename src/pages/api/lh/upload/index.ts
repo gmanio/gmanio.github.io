@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer";
 import { ElementHandle } from "puppeteer";
 import axios from "axios";
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk";
 
 type Data = {
   error: boolean;
@@ -97,7 +97,7 @@ export default async function handler(
     try {
       const leaseInfos = await page.$eval(".danjiInfo", (el: any) => {
         const supplyInfosEl = el.querySelector("#suplyTableBody");
-        let leaseInfo: any[] = [];
+        let leaseInfo = {};
 
         if (supplyInfosEl) {
           return [];
@@ -108,127 +108,145 @@ export default async function handler(
             const title = table.summary && table.summary;
 
             if (title.indexOf("모집") > -1) {
-              leaseInfo.push({
-                title: title,
-                values: [
-                  ...Array.from(table.querySelectorAll("tr"))
-                    .map((row: any) => {
-                      let result = null;
+              Object.assign(leaseInfo, {
+                supplyInfo: {
+                  title: title,
+                  values: [
+                    ...Array.from(table.querySelectorAll("tr"))
+                      .map((row: any) => {
+                        let result = null;
 
-                      if (row.querySelector("#mhshldTot")) {
-                        result = {
-                          key: "계",
-                          value: [
-                            {
-                              key: "계",
-                              value: row.querySelector("#mhshldTot").innerText,
-                            },
-                            row.querySelector("#totCol1") && {
-                              key: "1~2인 가구",
-                              value: row.querySelector("#totCol1").innerText,
-                            },
-                            row.querySelector("#totCol2") && {
-                              key: "3~4인 가구",
-                              value: row.querySelector("#totCol2").innerText,
-                            },
-                            row.querySelector("#totCol3") && {
-                              key: "5인이상 가구",
-                              value: row.querySelector("#totCol3").innerText,
-                            },
-                          ],
-                        };
-                      }
+                        if (row.querySelector("#mhshldTot")) {
+                          result = {
+                            key: "계",
+                            value: [
+                              {
+                                key: "계",
+                                value:
+                                  row.querySelector("#mhshldTot").innerText,
+                              },
+                              row.querySelector("#totCol1") && {
+                                key: "1~2인 가구",
+                                value: row.querySelector("#totCol1").innerText,
+                              },
+                              row.querySelector("#totCol2") && {
+                                key: "3~4인 가구",
+                                value: row.querySelector("#totCol2").innerText,
+                              },
+                              row.querySelector("#totCol3") && {
+                                key: "5인이상 가구",
+                                value: row.querySelector("#totCol3").innerText,
+                              },
+                            ],
+                          };
+                        }
 
-                      if (
-                        row.querySelectorAll("th") &&
-                        row.querySelectorAll("th").length > 0 &&
-                        row.querySelectorAll("td").length > 1
-                      ) {
-                        result = {
-                          key: Array.from(row.querySelectorAll("th"))
-                            .map((th: any) => th.innerText)
-                            .join(" "),
-                          value: [
-                            ...Array.from(row.querySelectorAll("td")).map(
-                              (td: any, index) => {
-                                let key = "";
-                                if (index == 0) {
-                                  key = "계";
-                                }
-                                if (index == 1) {
-                                  key = "1~2인 가구";
-                                }
-                                if (index == 2) {
-                                  key = "3~4인 가구";
-                                }
-                                if (index == 3) {
-                                  key = "5인이상 가구";
-                                }
+                        if (
+                          row.querySelectorAll("th") &&
+                          row.querySelectorAll("th").length > 0 &&
+                          row.querySelectorAll("td").length > 1
+                        ) {
+                          result = {
+                            key: Array.from(row.querySelectorAll("th"))
+                              .map((th: any) => th.innerText)
+                              .join(" "),
+                            value: [
+                              ...Array.from(row.querySelectorAll("td")).map(
+                                (td: any, index) => {
+                                  let key = "";
+                                  if (index == 0) {
+                                    key = "계";
+                                  }
+                                  if (index == 1) {
+                                    key = "1~2인 가구";
+                                  }
+                                  if (index == 2) {
+                                    key = "3~4인 가구";
+                                  }
+                                  if (index == 3) {
+                                    key = "5인이상 가구";
+                                  }
 
-                                return {
-                                  key: key,
-                                  value: td.innerText,
-                                };
-                              }
-                            ),
-                          ],
-                        };
-                      }
+                                  return {
+                                    key: key,
+                                    value: td.innerText,
+                                  };
+                                }
+                              ),
+                            ],
+                          };
+                        }
 
-                      return result;
-                    })
-                    .filter((item: any) => !!item),
-                ],
+                        return result;
+                      })
+                      .filter((item: any) => !!item),
+                  ],
+                },
               });
             }
 
             if (title.indexOf("조건") > -1) {
-              leaseInfo.push({
-                title: title,
-                values: [
-                  ...Array.from(table.querySelectorAll("tr"))
-                    .map((row: any) => {
-                      const key =
-                        row.querySelector("th") &&
-                        row.querySelector("th").innerText;
+              Object.assign(leaseInfo, {
+                conditions: {
+                  title: title,
+                  values: [
+                    ...Array.from(table.querySelectorAll("tr"))
+                      .map((row: any) => {
+                        const key =
+                          row.querySelector("th") &&
+                          row.querySelector("th").innerText;
 
-                      if (key.indexOf("공고") > -1) {
+                        if (key.indexOf("공고") > -1) {
+                          Object.assign(leaseInfo, {
+                            download: {
+                              filename:
+                                row.querySelector("a") &&
+                                row.querySelector("a").innerText.trim(),
+                              link:
+                                row.querySelector("a") &&
+                                row.querySelector("a").href,
+                            },
+                          });
+
+                          return {
+                            key: `공고문`,
+                            value: {
+                              filename:
+                                row.querySelector("a") &&
+                                row.querySelector("a").innerText.trim(),
+                              link:
+                                row.querySelector("a") &&
+                                row.querySelector("a").href,
+                            },
+                          };
+                        }
+
                         return {
-                          key: `공고문`,
-                          value: {
-                            filename:
-                              row.querySelector("a") &&
-                              row.querySelector("a").innerText.trim(),
-                            link:
-                              row.querySelector("a") &&
-                              row.querySelector("a").href,
-                          },
+                          key: key,
+                          value:
+                            row.querySelector("td") &&
+                            row.querySelector("td").innerText,
                         };
-                      }
-
-                      return {
-                        key: key,
-                        value:
-                          row.querySelector("td") &&
-                          row.querySelector("td").innerText,
-                      };
-                    })
-                    .filter((item: any) => !!item),
-                ],
+                      })
+                      .filter((item: any) => !!item),
+                  ],
+                },
               });
             }
 
             if (title.indexOf("문의") > -1) {
-              leaseInfo.push({
-                title: title,
-                values: [
-                  {
-                    key: "콜센터",
-                    value:
-                      table.querySelector("td") &&
-                      table.querySelector("td").innerText,
-                  },
-                ],
+              Object.assign(leaseInfo, {
+                center: {
+                  title: title,
+                  values: [
+                    {
+                      key: "콜센터",
+                      value:
+                        table.querySelector("td") &&
+                        table.querySelector("td").innerText,
+                    },
+                  ],
+                },
               });
             }
           }
@@ -532,41 +550,39 @@ export default async function handler(
       });
     }
 
-    // const uploadParams = {
-    //   Bucket: "lease-project",
-    //   Key: `detail/lease-item-${pblancId}.json`,
-    //   ACL: "public-read",
-    //   Body: JSON.stringify(result),
-    //   ContentType: "application/json",
-    // };
+    const uploadParams = {
+      Bucket: "lease-project",
+      Key: `detail/lease-item-${pblancId}.json`,
+      ACL: "public-read",
+      Body: JSON.stringify(result),
+      ContentType: "application/json",
+    };
 
-    // try {
-    //   const s3 = new AWS.S3({
-    //     accessKeyId: "AKIAXW3POAMCU54ICH7I",
-    //     secretAccessKey: "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",
-    //     region: "ap-northeast-2",
-    //   });
+    try {
+      const s3 = new AWS.S3({
+        accessKeyId: "AKIAXW3POAMCU54ICH7I",
+        secretAccessKey: "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",
+        region: "ap-northeast-2",
+      });
 
-    //   await s3.upload(uploadParams).promise();
-    // } catch (err) {
-    //   res.status(500).json({
-    //     statusCode: 500,
-    //     error: true,
-    //     errorMessage: "S3 upload Failed",
-    //     result: {},
-    //   });
-    // }
+      await s3.upload(uploadParams).promise();
+    } catch (err) {
+      res.status(500).json({
+        statusCode: 500,
+        error: true,
+        errorMessage: "S3 upload Failed",
+        result: {},
+      });
+    }
 
     let articleCafeId = 0;
 
     const naverCafeUrl = `https://cafe.naver.com/ArticleSearchList.nhn?search.clubid=30537001&search.searchdate=all&search.searchBy=0&search.query=${encodeURIComponent(
       result.articleTitle
     )}&search.defaultValue=1&search.menuid=4`;
-    
+
     try {
-      await page.goto(
-        naverCafeUrl
-      );
+      await page.goto(naverCafeUrl);
 
       const articleId = await page.$eval(".result-board", (el: any) => {
         if (!el.querySelectorAll("tr")) {
@@ -579,6 +595,7 @@ export default async function handler(
       });
 
       articleCafeId = articleId && articleId[0];
+
     } catch (err: any) {
       // return res.status(500).json({
       //   statusCode: 500,
@@ -598,6 +615,7 @@ export default async function handler(
       errorMessage: "",
       result: result,
     });
+
   } catch (err: any) {
     return res.status(500).json({
       statusCode: 500,
