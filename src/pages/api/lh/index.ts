@@ -126,7 +126,7 @@ export default async function handler(
                             row.querySelector("td").innerText,
                         };
                       }
-                    ),
+                    ).filter((item: any) => !!item),
                   ],
                 },
               });
@@ -164,7 +164,7 @@ export default async function handler(
                             row.querySelector("td").innerText,
                         };
                       }
-                    ),
+                    ).filter((item: any) => !!item),
                   ],
                 },
               });
