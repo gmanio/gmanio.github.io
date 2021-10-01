@@ -42,11 +42,11 @@ export default async function handler(
   const fileName =
     responseParser.data.result.danjiInfos.length > 0
       ? responseParser.data.result.danjiInfos[0].download.filename
-      : responseParser.data.result.leaseInfos.download.filename;
+      : responseParser.data.result.leaseSupplyInfo.download.filename;
   const fileLink =
     responseParser.data.result.danjiInfos.length > 0
       ? responseParser.data.result.danjiInfos[0].download.link
-      : responseParser.data.result.leaseInfos.download.link;
+      : responseParser.data.result.leaseSupplyInfo.download.link;
   const content = `
     <div style='display:flex; flex-direction:column;'>
       <div style='display:flex; flex-direction:column;'>

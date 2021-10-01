@@ -108,6 +108,68 @@ export default async function handler(
             const title = table.summary && table.summary;
             let region = "";
 
+            if (title.indexOf("대상지역") > -1) {
+              Object.assign(leaseInfo, {
+                targetRegion: {
+                  title: title,
+                  values: [
+                    ...Array.from(table.querySelectorAll("tr")).map(
+                      (row: any) => {
+                        const index =
+                          row.querySelector("th") &&
+                          row.querySelector("th").innerText;
+
+                        return {
+                          index,
+                          value:
+                            row.querySelector("td") &&
+                            row.querySelector("td").innerText,
+                        };
+                      }
+                    ),
+                  ],
+                },
+              });
+            }
+
+            if (title.indexOf("대상주택") > -1) {
+              Object.assign(leaseInfo, {
+                targetConditionInfo: {
+                  title: title,
+                  values: [
+                    ...Array.from(table.querySelectorAll("tr")).map(
+                      (row: any) => {
+                        const index =
+                          row.querySelector("th") &&
+                          row.querySelector("th").innerText;
+                          
+                          if (index.indexOf("공고") > -1) {
+                            Object.assign(leaseInfo, {
+                              download: {
+                                filename:
+                                  row.querySelector("a") &&
+                                  row.querySelector("a").innerText.trim(),
+                                link:
+                                  row.querySelector("a") &&
+                                  row.querySelector("a").href,
+                              },
+                            });
+  
+                            return null;
+                          }
+                        return {
+                          index,
+                          value:
+                            row.querySelector("td") &&
+                            row.querySelector("td").innerText,
+                        };
+                      }
+                    ),
+                  ],
+                },
+              });
+            }
+
             if (title.indexOf("모집") > -1) {
               Object.assign(leaseInfo, {
                 supplyInfo: {
@@ -150,7 +212,6 @@ export default async function handler(
                           row.querySelectorAll("th").length > 0 &&
                           row.querySelectorAll("td").length > 1
                         ) {
-
                           if (THAll.length > 1) {
                             region = THAll[0].innerText;
                           }
