@@ -100,7 +100,7 @@ export default async function handler(
         let leaseInfo = {};
 
         if (supplyInfosEl) {
-          return [];
+          return {};
         }
 
         Array.from(el.querySelectorAll(".danjiWrap .table_type2")).map(
@@ -113,8 +113,8 @@ export default async function handler(
                 targetRegion: {
                   title: title,
                   values: [
-                    ...Array.from(table.querySelectorAll("tr")).map(
-                      (row: any) => {
+                    ...Array.from(table.querySelectorAll("tr"))
+                      .map((row: any) => {
                         const index =
                           row.querySelector("th") &&
                           row.querySelector("th").innerText;
@@ -125,8 +125,8 @@ export default async function handler(
                             row.querySelector("td") &&
                             row.querySelector("td").innerText,
                         };
-                      }
-                    ).filter((item: any) => !!item),
+                      })
+                      .filter((item: any) => !!item),
                   ],
                 },
               });
@@ -137,34 +137,34 @@ export default async function handler(
                 targetConditionInfo: {
                   title: title,
                   values: [
-                    ...Array.from(table.querySelectorAll("tr")).map(
-                      (row: any) => {
+                    ...Array.from(table.querySelectorAll("tr"))
+                      .map((row: any) => {
                         const index =
                           row.querySelector("th") &&
                           row.querySelector("th").innerText;
-                          
-                          if (index.indexOf("공고") > -1) {
-                            Object.assign(leaseInfo, {
-                              download: {
-                                filename:
-                                  row.querySelector("a") &&
-                                  row.querySelector("a").innerText.trim(),
-                                link:
-                                  row.querySelector("a") &&
-                                  row.querySelector("a").href,
-                              },
-                            });
-  
-                            return null;
-                          }
+
+                        if (index.indexOf("공고") > -1) {
+                          Object.assign(leaseInfo, {
+                            download: {
+                              filename:
+                                row.querySelector("a") &&
+                                row.querySelector("a").innerText.trim(),
+                              link:
+                                row.querySelector("a") &&
+                                row.querySelector("a").href,
+                            },
+                          });
+
+                          return null;
+                        }
                         return {
                           index,
                           value:
                             row.querySelector("td") &&
                             row.querySelector("td").innerText,
                         };
-                      }
-                    ).filter((item: any) => !!item),
+                      })
+                      .filter((item: any) => !!item),
                   ],
                 },
               });
@@ -414,7 +414,21 @@ export default async function handler(
           naverAddressesResponse.data.addresses.length > 0
         ) {
           Object.assign(danjiInfo, {
-            addressDetail: naverAddressesResponse.data.addresses[0],
+            addressDetail: {
+              roadAddress: naverAddressesResponse.data.addresses[0].roadAddress
+                ? naverAddressesResponse.data.addresses[0].roadAddress
+                : "",
+              jibunAddress: naverAddressesResponse.data.addresses[0]
+                .jibunAddress
+                ? naverAddressesResponse.data.addresses[0].jibunAddress
+                : "",
+              x: naverAddressesResponse.data.addresses[0].x
+                ? naverAddressesResponse.data.addresses[0].x
+                : "",
+              y: naverAddressesResponse.data.addresses[0].y
+                ? naverAddressesResponse.data.addresses[0].y
+                : "",
+            },
           });
         }
 
