@@ -9,6 +9,7 @@ type Data = {
   result: any;
   statusCode: number;
 };
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>

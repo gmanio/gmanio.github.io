@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import puppeteer from "puppeteer";
 import { ElementHandle } from "puppeteer";
 import axios from "axios";
-// import AWS from "aws-sdk";
+import AWS from "aws-sdk";
 
 type Data = {
   error: boolean;
@@ -95,7 +95,7 @@ export default async function handler(
     }
 
     try {
-      const leaseInfos = await page.$eval(".danjiInfo", (el: any) => {
+      const leaseSupplyInfo = await page.$eval(".danjiInfo", (el: any) => {
         const supplyInfosEl = el.querySelector("#suplyTableBody");
         let leaseInfo = {};
 
@@ -106,6 +106,7 @@ export default async function handler(
         Array.from(el.querySelectorAll(".danjiWrap .table_type2")).map(
           (table: any) => {
             const title = table.summary && table.summary;
+            let region = "";
 
             if (title.indexOf("모집") > -1) {
               Object.assign(leaseInfo, {
@@ -140,16 +141,28 @@ export default async function handler(
                             ],
                           };
                         }
+                        const THAll: any = Array.from(
+                          row.querySelectorAll("th")
+                        );
 
                         if (
                           row.querySelectorAll("th") &&
                           row.querySelectorAll("th").length > 0 &&
                           row.querySelectorAll("td").length > 1
                         ) {
+
+                          if (THAll.length > 1) {
+                            region = THAll[0].innerText;
+                          }
+
                           result = {
-                            key: Array.from(row.querySelectorAll("th"))
-                              .map((th: any) => th.innerText)
-                              .join(" "),
+                            index:
+                              THAll.length === 1
+                                ? `${region} ` +
+                                  THAll.map((th: any) => th.innerText)
+                                : THAll.map((th: any) => th.innerText).join(
+                                    " "
+                                  ),
                             value: [
                               ...Array.from(row.querySelectorAll("td")).map(
                                 (td: any, index) => {
@@ -168,7 +181,7 @@ export default async function handler(
                                   }
 
                                   return {
-                                    key: key,
+                                    column: key,
                                     value: td.innerText,
                                   };
                                 }
@@ -187,7 +200,7 @@ export default async function handler(
 
             if (title.indexOf("조건") > -1) {
               Object.assign(leaseInfo, {
-                conditions: {
+                leaseConditionInfo: {
                   title: title,
                   values: [
                     ...Array.from(table.querySelectorAll("tr"))
@@ -208,21 +221,11 @@ export default async function handler(
                             },
                           });
 
-                          return {
-                            key: `공고문`,
-                            value: {
-                              filename:
-                                row.querySelector("a") &&
-                                row.querySelector("a").innerText.trim(),
-                              link:
-                                row.querySelector("a") &&
-                                row.querySelector("a").href,
-                            },
-                          };
+                          return null;
                         }
 
                         return {
-                          key: key,
+                          index: key,
                           value:
                             row.querySelector("td") &&
                             row.querySelector("td").innerText,
@@ -236,16 +239,11 @@ export default async function handler(
 
             if (title.indexOf("문의") > -1) {
               Object.assign(leaseInfo, {
-                center: {
+                question: {
                   title: title,
-                  values: [
-                    {
-                      key: "콜센터",
-                      value:
-                        table.querySelector("td") &&
-                        table.querySelector("td").innerText,
-                    },
-                  ],
+                  value:
+                    table.querySelector("td") &&
+                    table.querySelector("td").innerText,
                 },
               });
             }
@@ -255,7 +253,7 @@ export default async function handler(
         return leaseInfo;
       });
 
-      result = Object.assign(result, { leaseInfos });
+      result = Object.assign(result, { leaseSupplyInfo });
     } catch (err: any) {
       return res.status(500).json({
         statusCode: 500,
@@ -595,7 +593,6 @@ export default async function handler(
       });
 
       articleCafeId = articleId && articleId[0];
-
     } catch (err: any) {
       // return res.status(500).json({
       //   statusCode: 500,
@@ -615,7 +612,6 @@ export default async function handler(
       errorMessage: "",
       result: result,
     });
-
   } catch (err: any) {
     return res.status(500).json({
       statusCode: 500,
