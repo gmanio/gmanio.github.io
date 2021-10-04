@@ -20,7 +20,7 @@ export default async function handler(
     const access_token = naverAuthResponse.data.access_token;
     const header = "Bearer " + access_token; // Bearer 다음에 공백 추가
     const clubid = 30537001; // 카페의 고유 ID값
-    const menuid = 1; // 카페 게시판 id (상품게시판은 입력 불가)
+    const menuid = 58; // 카페 게시판 id (상품게시판은 입력 불가)
 
     const response = await axios.get(
       `https://d3sr66w7pj3296.cloudfront.net/main/lease_main_list.json`
