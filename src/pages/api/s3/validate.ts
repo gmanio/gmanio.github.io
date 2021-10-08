@@ -18,7 +18,7 @@ export default async function handler(
       DistributionId: "E31ESUOG7R97CU",
       InvalidationBatch: {
         Paths: { Quantity: 1, Items: [`/${reset}/*`] },
-        CallerReference: "nodejsAPI",
+        CallerReference: `validationRef_${new Date()}`,
       },
     },
     (err, data) => {
