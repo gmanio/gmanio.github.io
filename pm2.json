@@ -1,11 +1,11 @@
 {
-    "apps": [
-        {
-            "name": "lease-project",
-            "script": "npm",
-            "args" : "start",
-            "instances": "max",
-            "exec_mode": "cluster"
-        }
-    ]
-  }
+  "apps": [
+    {
+      "name": "lease-project",
+      "script": "npm",
+      "args": "start",
+      "instances": "max",
+      "exec_mode": "cluster"
+    }
+  ]
+}

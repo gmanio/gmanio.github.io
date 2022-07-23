@@ -48,13 +48,15 @@ export const DwarfImage = styled.img`
 `;
 
 export const ImageDescription = styled.div`
-  margin-top: 30px;
-  margin-left: -30px;
+  /* margin-top: 30px;
+  margin-left: -30px; */
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: start;
   align-items: center;
-  height: 40px;
-  font-size: 40px;
+  /* height: 40px; */
+  /* line-height: 50px; */
+  /* font-size: 40px; */
   font-family: 'Caveat';
   animation: ${glitch} 3s steps(100) infinite;
 `;
