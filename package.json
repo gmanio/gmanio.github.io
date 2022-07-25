@@ -12,7 +12,7 @@
     "pm2": "pm2 startOrReload --node-args=\"--max-old-space-size=1024\" -i max npm --name \"gmanio\" -- run dev"
   },
   "dependencies": {
-    "@material-ui/core": "^5.0.0-beta.5",
+    "@mui/material": "^5.9.1",
     "aws-sdk": "^2.996.0",
     "axios": "^0.21.4",
     "cheerio": "^1.0.0-rc.10",
@@ -24,8 +24,8 @@
     "pdf2pic": "^2.1.4",
     "puppeteer": "^10.4.0",
     "qs": "^6.10.1",
-    "react": "17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "request": "^2.88.2",
     "tailwindcss": "^3.1.6",
     "typed.js": "^2.0.12"

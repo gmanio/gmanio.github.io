@@ -1,7 +1,7 @@
 import Typed from 'typed.js';
 import { useEffect, useRef } from 'react';
 
-const TypedIntro = ({ text }: { text: string[] }) => {
+const TypedIntro = ({ text, onComplete }: { text: string[]; onComplete: (Self: Typed) => void }) => {
   const wrapperEl = useRef(null);
 
   useEffect(() => {
@@ -10,15 +10,16 @@ const TypedIntro = ({ text }: { text: string[] }) => {
       // Speed settings, try diffrent values untill you get good results
       startDelay: 300,
       typeSpeed: 100,
-      backSpeed: 10,
+      backSpeed: 50,
       backDelay: 80,
       // loop: true,
       // loopCount: Infinity,
-      onComplete: (self: any) => {
-        if (self && self.cursor) {
-          self.cursor.remove();
-        }
-      },
+      // onComplete: (self: any) => {
+      //   if (self && self.cursor) {
+      //     self.cursor.remove();
+      //   }
+      // },
+      onComplete: onComplete,
     });
 
     // Destropying

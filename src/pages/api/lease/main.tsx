@@ -315,7 +315,7 @@ export default async function handler(
           ...formData.getHeaders(),
           Authorization: header,
         },
-        body: formData,
+        body: JSON.stringify(formData),
       }
     );
 

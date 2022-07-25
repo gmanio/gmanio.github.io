@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const { query, display = 20, start = 1, sort = "date" } = req.query;
+  const { query = '', display = 20, start = 1, sort = "date" } = req.query;
 
   const response = await axios.get(
     `https://openapi.naver.com/v1/search/news.json?query=${encodeURIComponent(query.toString())}&display=${display}&start=${start}&sort=${sort}`,

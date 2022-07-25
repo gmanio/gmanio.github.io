@@ -1,8 +1,10 @@
-import styled from "@emotion/styled";
-import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
+// import styled from "@emotion/styled";
+// import Paper from "@material-ui/core/Paper";
+// import Container from "@material-ui/core/Container";
 
-import { glitch, blur } from "../../styles/keyframes";
+import styled from '@emotion/styled';
+import { Paper, Container } from '@mui/material';
+import { glitch, blur } from '../../styles/keyframes';
 
 export const BasePage = styled(Paper)`
   display: flex;
@@ -54,6 +56,7 @@ export const ImageDescription = styled.div`
   width: 100%;
   justify-content: start;
   align-items: center;
+  white-space: pre;
   /* height: 40px; */
   /* line-height: 50px; */
   /* font-size: 40px; */
