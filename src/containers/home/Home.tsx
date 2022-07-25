@@ -38,16 +38,22 @@ const HomePage = () => {
     }
   });
 
-  const handleCompletePhase1 = (self: Typed) => {
+  const handleCompletePhase1 = (self: any) => {
     setHomeContext({
       isPhase1TypeCompleted: true,
     });
+    if (self && self.cursor) {
+      self.cursor.remove();
+    }
   };
 
-  const handleCompletePhase2 = (self: Typed) => {
+  const handleCompletePhase2 = (self: any) => {
     setHomeContext({
       isPhase2TypeCompleted: true,
     });
+    if (self && self.cursor) {
+      self.cursor.remove();
+    }
   };
 
   return (
@@ -58,14 +64,16 @@ const HomePage = () => {
       <PageContainer>
         <ContentContainer>
           <ImageDescription>
-            <TypedIntro text={['Time flies like an arrow.']} onComplete={handleCompletePhase2} />
+            <TypedIntro text={['Time flies like an arrow.']} onComplete={handleCompletePhase1} />
           </ImageDescription>
           {homeContext.isPhase1TypeCompleted && (
-            <ImageDescription>
-              <TypedIntro text={['Gman says']} onComplete={handleCompletePhase1} />
+            <ImageDescription className={`text-5xl ${homeContext.isPhase1TypeCompleted ? 'opacity-1' : 'opacity-0'}`}>
+              <TypedIntro text={['Flamingo says']} onComplete={handleCompletePhase2} />
             </ImageDescription>
           )}
-          {homeContext.isPhase2TypeCompleted && <ImageDescription className="text-5xl">{preSeason} is comming.</ImageDescription>}
+          <ImageDescription className={`text-5xl ${homeContext.isPhase2TypeCompleted ? 'opacity-1' : 'opacity-0'}`}>
+            {preSeason} is comming.
+            </ImageDescription>
           {/* <BackgroundImageWrapper>
             <DwarfImage src="/bg_dwarf.png" alt="me" />
           </BackgroundImageWrapper> */}

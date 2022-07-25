@@ -15,10 +15,10 @@ export const HomeProvider = ({ children }: { children: React.ReactNode }) => {
     isPhase2TypeCompleted: false,
   };
 
-  const [HomeContext, setHomeContext]: any = useReducer(
+  const [homeContext, setHomeContext]: any = useReducer(
     (state: Partial<HomeContextState>, action: Partial<HomeContextState>) => Object.assign({}, { ...state }, { ...action }),
     initialState
   );
 
-  return <HomeContext.Provider value={[HomeContext, setHomeContext]}>{children}</HomeContext.Provider>;
+  return <HomeContext.Provider value={[homeContext, setHomeContext]}>{children}</HomeContext.Provider>;
 };

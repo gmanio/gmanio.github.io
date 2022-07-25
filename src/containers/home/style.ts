@@ -62,4 +62,5 @@ export const ImageDescription = styled.div`
   /* font-size: 40px; */
   font-family: 'Caveat';
   animation: ${glitch} 3s steps(100) infinite;
+  transition: all 3s ease-in-out;
 `;
