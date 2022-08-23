@@ -64,11 +64,11 @@ const HomePage = () => {
       <PageContainer>
         <ContentContainer>
           <ImageDescription>
-            <TypedIntro text={['Time flies like an arrow.', 'What will happen to me.']} onComplete={handleCompletePhase1} />
+            <TypedIntro text={['Time flies like an arrow.', 'What you gonna do it?']} onComplete={handleCompletePhase1} />
           </ImageDescription>
           {homeContext.isPhase1TypeCompleted && (
             <ImageDescription className={`text-5xl ${homeContext.isPhase1TypeCompleted ? 'opacity-1' : 'opacity-0'}`}>
-              <TypedIntro text={['There is a Flamingo.', 'Flamingo says']} onComplete={handleCompletePhase2} />
+              <TypedIntro text={['Nobody can help you.', 'Heaven helps those who help themselves']} onComplete={handleCompletePhase2} />
             </ImageDescription>
           )}
           <ImageDescription className={`text-5xl ${homeContext.isPhase2TypeCompleted ? 'opacity-1' : 'opacity-0'}`}>
