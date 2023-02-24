@@ -1,10 +1,11 @@
 "use client";
 // import Image from 'next/image'
 // import { Inter } from "next/font/google";
-import TypedTypography from "./components/TypedTypograpy";
-import styles from "./page.module.css";
+// import TypedTypography from "./components/TypedTypograpy";
+import styles from "../app/page.module.css";
 import Typed from "typed.js";
 import { useState } from "react";
+import TypedTypography from "@/app/components/TypedTypograpy";
 
 // const inter = Inter({ subsets: ["latin"] });
 

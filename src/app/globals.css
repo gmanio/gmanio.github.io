@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Caveat";
+  font-weight: 400;
+  src: url("/fonts/Caveat-VariableFont_wght.ttf") format("truetype");
+}
+
 /* text: #00a9e0 */
 /* bg: #189cc4 */
 :root {

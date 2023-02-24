@@ -36,7 +36,7 @@ const TypedTypography = ({ text, onComplete }: Props) => {
   }, []);
 
   return (
-    <div className="flex text-3xl">
+    <div className="flex text-5xl" style={{ fontFamily: "Caveat" }}>
       <span ref={wrapperEl}></span>
     </div>
   );
