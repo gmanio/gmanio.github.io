@@ -1,17 +1,11 @@
-"use client";
-import { ReactNode } from "react";
-import "./globals.css";
+import { Html, Head, Main, NextScript } from "next/document";
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const Document = () => {
   const GOOGLE_ANALYTICS = "G-J3SVSHNDTE";
 
   return (
-    <html lang="ko">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head>
+    <Html lang="ko">
+      <Head>
         <title>Gmanio | Application</title>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta name="description" content="powered by React" />
@@ -43,10 +37,13 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         `,
           }}
         />
-      </head>
-      <body>{children}</body>
-    </html>
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
   );
 };
 
-export default RootLayout;
+export default Document;

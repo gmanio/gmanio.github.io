@@ -1,7 +1,8 @@
+'use client';
 // import Image from 'next/image'
 // import { Inter } from "next/font/google";
 // import TypedTypography from "./components/TypedTypograpy";
-import styles from "../app/page.module.css";
+import styles from "./page.module.css";
 import Typed from "typed.js";
 import { useState } from "react";
 import TypedTypography from "@/components/TypedTypograpy";
@@ -22,22 +23,14 @@ const Home = () => {
       // self.destroy();
     };
 
-  const sendToGA = () => {
-    window.gtag("event", "click", {
-      event_category: "home_event_category",
-      event_label: "home_event_label",
-      value: "home_event_click_value",
-    });
-  };
-
   return (
-    <main className={styles.main} onClick={sendToGA}>
-      <div className={[styles.glitch_text, "flex w-full flex-col"].join(" ")}>
+    <main className={styles.main}>
+      <div className={[styles.glitch_text, "flex w-full flex-col"].join(' ')}>
         {step >= 0 && (
           <TypedTypography
             text={[
               "There’s no fruit that you can get without time and effort.",
-              "The future depends on what we do in the present.",
+              "The future depends on what we do in the present."
             ]}
             onComplete={handleCompleteTyping(0)}
           />
