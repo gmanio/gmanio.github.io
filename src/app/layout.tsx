@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Noto_Sans_KR } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
-const geistSans = Geist({
+import "../../public/globals.css";
+
+const geistSans = Noto_Sans_KR({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = Noto_Sans_KR({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -15,7 +17,34 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Gmanio | Application",
   description: "There’s no fruit that you can get without time and effort.",
+  keywords: ["gmanio", "application", "frontend", "backend"],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Gmanio | Application",
+    description: "There’s no fruit that you can get without time and effort.",
+    url: "https://gman.io",
+    siteName: "Gmanio",
+    images: [
+      {
+        url: "https://gmanio.github.io/favicon/apple-touch-icon.png",
+        width: 180,
+        height: 180,
+        alt: "Gmanio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gmanio | Application",
+    description: "There’s no fruit that you can get without time and effort.",
+    images: ["https://gmanio.github.io/favicon/apple-touch-icon.png"],
+  },
 };
+
+const GOOGLE_ANALYTICS = "G-J3SVSHNDTE";
 
 export default function RootLayout({
   children,
@@ -28,6 +57,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <GoogleAnalytics gaId={GOOGLE_ANALYTICS} />
       </body>
     </html>
   );
